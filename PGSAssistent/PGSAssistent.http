@@ -1,0 +1,6 @@
+@PGSAssistent_HostAddress = http://localhost:5043
+
+GET {{PGSAssistent_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
