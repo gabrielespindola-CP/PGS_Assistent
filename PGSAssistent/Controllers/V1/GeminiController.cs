@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PGSAssistent.Configuration;
 using PGSAssistent.Services;
+using PGSAssistentAPI.DTOs;
 
 namespace PGSAssistent.Controllers.V1
 {
@@ -23,9 +24,14 @@ namespace PGSAssistent.Controllers.V1
         }
 
         [HttpPost("ask")]
-        public async Task<IActionResult> Ask([FromBody] )
+        public async Task<IActionResult> Ask([FromBody] AskDto ask, CancellationToken cancelationToken)
         {
-            string result = await _geminiService.ExececutePrompt();
+            if (string.IsNullOrEmpty(ask.Prompt)) return BadRequest("Por favor digite sua pergunta.");
+
+            var result = await _geminiService.ExecutePromptAsync(
+                prompt: ask.Prompt,
+                ct: cancelationToken
+            );
             return Ok(result);
         }
     }

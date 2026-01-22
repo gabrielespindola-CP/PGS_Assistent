@@ -2,6 +2,6 @@
 {
     public class AskDto
     {
-        public string Ask { get; set; }
+        public string Prompt { get; set; }
     }
 }
