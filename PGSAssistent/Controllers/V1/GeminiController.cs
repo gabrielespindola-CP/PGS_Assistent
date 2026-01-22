@@ -16,7 +16,14 @@ namespace PGSAssistent.Controllers.V1
         }
 
         [HttpGet("health")]
-        public async Task<IActionResult> Get() 
+        public async Task<IActionResult> Health() 
+        {
+            string result = await _geminiService.ExececutePrompt();
+            return Ok(result);
+        }
+
+        [HttpPost("ask")]
+        public async Task<IActionResult> Ask([FromBody] )
         {
             string result = await _geminiService.ExececutePrompt();
             return Ok(result);
