@@ -2,17 +2,17 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PGSAssistent.Configuration;
-using PGSAssistentAPI.DTOs;
+using PGSAssistentAPI.DTOs.ConversationalDTOs;
 using System.Threading.Tasks;
 
 namespace PGSAssistent.Services
 {
-    public class GeminiService
+    public class ConversationalService
     {
         private readonly GeminiSettings _geminiSettings;
-        private readonly ILogger<GeminiService> _logger;
+        private readonly ILogger<ConversationalService> _logger;
 
-        public GeminiService(IOptions<GeminiSettings> options, ILogger<GeminiService> logger) 
+        public ConversationalService(IOptions<GeminiSettings> options, ILogger<ConversationalService> logger) 
         {
             _geminiSettings = options.Value;
             _logger = logger;
@@ -59,27 +59,8 @@ namespace PGSAssistent.Services
 
             try
             {
-                var client = new Client(apiKey: apiKey);
-                var result = await client.Models.GenerateContentAsync(
-                    model: _geminiSettings.Model,
-                    contents: $""""
-                        Você é um assistente especializado na documentação interna.
-                        Use SOMENTE o contexto abaixo para responder.
-
-                        CONTEXTO:
-                        
-
-                        PERGUNTA:
-                        {prompt}
-
-                        Responda em português e de maneira detalhada e técnica.
-                        Se a resposta não estiver no contexto, diga claramente que não encontrou na documentação fornecida.
-                        """"
-                    );
-
-                response.Response = result.Candidates[0].Content.Parts[0].Text;
-                _logger.LogInformation(response.Response);
-                return response;
+                var storeName = _geminiSettings.FileSearchName;
+                var url = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={_geminiSettings.ApiKey}";
             }
 
             catch (Exception ex)

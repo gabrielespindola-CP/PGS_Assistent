@@ -1,5 +1,6 @@
 using PGSAssistent.Configuration;
 using PGSAssistent.Services;
+using PGSAssistentAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +10,13 @@ builder.Services.Configure<GeminiSettings>(
     builder.Configuration.GetSection("Gemini")
     );
 
-builder.Services.AddScoped<GeminiService>();
+builder.Services.AddHttpClient<FileSearchService>(http =>
+{
+    http.BaseAddress = new Uri("https://generativelanguage.googleapis.com/");
+    http.Timeout = TimeSpan.FromSeconds(30);
+});
 
+builder.Services.AddScoped<ConversationalService>();
 var app = builder.Build();
 
 app.UseHttpsRedirection();

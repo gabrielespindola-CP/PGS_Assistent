@@ -1,17 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using PGSAssistent.Configuration;
 using PGSAssistent.Services;
-using PGSAssistentAPI.DTOs;
+using PGSAssistentAPI.DTOs.ConversationalDTOs;
 
 namespace PGSAssistent.Controllers.V1
 {
     [ApiController]
     [Route("PGSAssistent/v1/")]
-    public class GeminiController : ControllerBase
+    public class ConversationalController : ControllerBase
     {
-        private readonly GeminiService _geminiService;
+        private readonly ConversationalService _geminiService;
 
-        public GeminiController(GeminiService geminiService)
+        public ConversationalController(ConversationalService geminiService)
         {
             _geminiService = geminiService;
         }

@@ -1,4 +1,4 @@
-﻿namespace PGSAssistentAPI.DTOs
+﻿namespace PGSAssistentAPI.DTOs.ConversationalDTOs
 {
     public class ResponseDto
     {
